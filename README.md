@@ -13,11 +13,13 @@
 |6|Dreamer|[Paper Link](https://arxiv.org/pdf/1912.01603.pdf)|Slide Link|
 
 ### Contributor
-[LeejwUniverse](https://github.com/LeejwUniverse)
-[kyunghoon-jung](https://github.com/kyunghoon-jung)
-[backgom2357](https://github.com/backgom2357)
-[LeejwUniverse](https://github.com/LeejwUniverse)
-[LeejwUniverse](https://github.com/LeejwUniverse)
+|Name|
+|---|
+|[LeejwUniverse](https://github.com/LeejwUniverse)|
+|[kyunghoon-jung](https://github.com/kyunghoon-jung)|
+|[backgom2357](https://github.com/backgom2357)|
+|[LeejwUniverse](https://github.com/LeejwUniverse)|
+|[LeejwUniverse](https://github.com/LeejwUniverse)|
 
 ### Today's art
 <div align="center">
