@@ -1,7 +1,7 @@
 # Model Based Reinforcement Learning
 - - -
 
-#### List
+### List
 
 |No|Name|Paper|Slide|
 |---|---|---|---|
@@ -12,7 +12,14 @@
 |5|SimPLe|[Paper Link](https://arxiv.org/pdf/1903.00374.pdf)|Slide Link|
 |6|Dreamer|[Paper Link](https://arxiv.org/pdf/1912.01603.pdf)|Slide Link|
 
-#### Today's art
+### Contributor
+[LeejwUniverse](https://github.com/LeejwUniverse)
+[kyunghoon-jung](https://github.com/kyunghoon-jung)
+[backgom2357](https://github.com/backgom2357)
+[LeejwUniverse](https://github.com/LeejwUniverse)
+[LeejwUniverse](https://github.com/LeejwUniverse)
+
+### Today's art
 <div align="center">
     <img src="https://github.com/FL14-MBRL/Model_Based_RL/blob/main/etc/A%20Walk%20at%20Twilight(vincent%20van%20gogh).jpg" width="500">
 </div>
