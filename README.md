@@ -20,8 +20,8 @@
 |[LeejwUniverse](https://github.com/LeejwUniverse)|
 |[kyunghoon-jung](https://github.com/kyunghoon-jung)|
 |[backgom2357](https://github.com/backgom2357)|
-|[LeejwUniverse](https://github.com/LeejwUniverse)|
-|[LeejwUniverse](https://github.com/LeejwUniverse)|
+|[hjcho12](https://github.com/hjcho12)|
+|[RUOK90](https://github.com/RUOK90)|
 - - -
 
 
