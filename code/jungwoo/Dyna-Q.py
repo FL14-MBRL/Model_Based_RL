@@ -17,9 +17,9 @@ class maze_world():
         self.right = 3
 
     def initialize(self, map_size, walls):
-        maze_env = np.zeros((map_size[0], map_size[1]))
+        maze_env = [['□' for i in range(map_size[1])] for j in range(map_size[0])] #np.zeros((map_size[0], map_size[1]))
         for w in walls:
-            maze_env[w[0]][w[1]] = 1
+            maze_env[w[0]][w[1]] = '■'
         return maze_env
 
     def state_0(self):
@@ -67,10 +67,16 @@ class maze_world():
     
     def render(self, action=None):
         os.system('cls')
-        self.maze_env[self.pre_state[0]][self.pre_state[1]] = 0
-        self.maze_env[self.cur_state[0]][self.cur_state[1]] = 7
+        self.maze_env[self.pre_state[0]][self.pre_state[1]] = '□'
+        self.maze_env[self.cur_state[0]][self.cur_state[1]] = '♣'
         self.pre_state = self.cur_state.copy()
-        print(self.maze_env)
+        for i in self.maze_env:
+            for n, j in enumerate(i):
+                if n == 8:
+                    print(j)
+                else:
+                    print(j, end='')
+            
         if action == self.up:
             print('Up')
         elif action == self.down:
@@ -149,7 +155,7 @@ def main():
     goal_point = np.array([0,8])
     walls = [[1,2],[2,2],[3,2],[4,5],[0,7],[1,7],[2,7]]
 
-    episode = 100
+    episode = 2
     N_times = 50
 
     world = maze_world(map_size, start_point, goal_point, walls)
