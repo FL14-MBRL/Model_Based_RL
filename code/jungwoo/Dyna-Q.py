@@ -1,12 +1,13 @@
 import numpy as np
 import time
-
+import os
 class maze_world():
     def __init__(self, map_size, start_point, goal_point, walls):
         self.maze_env = self.initialize(map_size, walls) 
         self.start_point = start_point.copy()
         self.goal_point = goal_point.copy()
         self.walls = walls.copy()
+        self.pre_state = start_point.copy()
         self.cur_state = start_point.copy()
         self.map_size = map_size.copy()
         
@@ -64,15 +65,30 @@ class maze_world():
             return True
         return False
     
-    def render(self):
-        return 0
+    def render(self, action=None):
+        os.system('cls')
+        self.maze_env[self.pre_state[0]][self.pre_state[1]] = 0
+        self.maze_env[self.cur_state[0]][self.cur_state[1]] = 7
+        self.pre_state = self.cur_state.copy()
+        print(self.maze_env)
+        if action == self.up:
+            print('Up')
+        elif action == self.down:
+            print('Down')
+        elif action == self.left:
+            print('Left')
+        elif action == self.right:
+            print('Right')
+        time.sleep(2)
+ 
 
 class Dyna_q():
-    def __init__(self, epsilon, alpha, action_size, map_size, world):
+    def __init__(self, epsilon, alpha, gamma, action_size, map_size, world):
         self.world_model = []
         self.Q = self.initialize(action_size, map_size, world)
         self.epsilon = epsilon
         self.alpha = alpha
+        self.gamma = gamma
         self.action_size = action_size
 
     def initialize(self, action_size, map_size, world):
@@ -95,7 +111,7 @@ class Dyna_q():
                     return action
 
     def Q_update(self, state, action, next_state, reward):
-        self.Q[action, state[0], state[1]] += self.alpha * (reward + np.max(self.Q[:,next_state[0], next_state[1]]) - self.Q[action, state[0], state[1]])
+        self.Q[action, state[0], state[1]] += self.alpha * (reward + self.gamma * np.max(self.Q[:,next_state[0], next_state[1]]) - self.Q[action, state[0], state[1]])
       
     def learn_world_model(self, state, action, next_state, reward):
         self.world_model.append((state, action, next_state, reward))
@@ -114,24 +130,31 @@ class Dyna_q():
         next_state = output[2]
         return reward, next_state
     
-    def optimal_policy(self):
-        
+    def optimal_policy(self, world, state):
+        Q_values = self.Q[:,state[0], state[1]]
+        max_Q_value = np.max(Q_values)
+        while True:
+            action = np.random.choice([action for action, Q_values in enumerate(Q_values) if Q_values == max_Q_value]) # 같은 Q_value를 가진 action을 모두 찾은 후 random 선택.
+            if world.check_available_action(state, action):
+                return action
+        return 0
 
 def main():
     epsilon = 0.1
     alpha = 0.5
+    gamma = 0.95
     action_size = 4
     map_size = np.array([6,9])
     start_point = np.array([2,0])
     goal_point = np.array([0,8])
     walls = [[1,2],[2,2],[3,2],[4,5],[0,7],[1,7],[2,7]]
 
-    episode = 2
+    episode = 100
     N_times = 50
 
     world = maze_world(map_size, start_point, goal_point, walls)
     print(world.maze_env)
-    Dyna = Dyna_q(epsilon, alpha, action_size, map_size, world)
+    Dyna = Dyna_q(epsilon, alpha, gamma, action_size, map_size, world)
     print(Dyna.Q)
     for epi in range(episode):
         done = True
@@ -146,8 +169,17 @@ def main():
                 h_state, h_action = Dyna.random_s_a()
                 h_reward, h_next_state = Dyna.forward_world_model(h_state, h_action)
                 Dyna.Q_update(h_state, h_action, h_next_state, h_reward)
-    
-
     print(Dyna.Q)
+    done = True
+    state = world.state_0()
+    world.render()
+    while done:
+        action = Dyna.optimal_policy(world, state)
+        world.render(action)
+        next_state, reward, done = world.step(action)
+        Dyna.Q_update(state, action, next_state, reward)
+        Dyna.learn_world_model(state, action, next_state, reward)
+        state = next_state.copy()
+    world.render()
 if __name__ == '__main__':
     main()
